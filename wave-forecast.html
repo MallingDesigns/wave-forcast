@@ -1,0 +1,22 @@
+<link rel="import" href="../google-map/google-map.html">
+<link rel="import" href="../polymer/polymer.html">
+<!--
+`<wave-forcast>` a forecast to let you know the current wave heights
+@demo demo.html
+-->
+
+<dom-module id="wave-forcast">
+  <template>
+
+                         <h3 id="current-name">Maddie's Local Beach</h3>
+                         <div class="result" id="localBeach-lastUpdate">{{beachName}}</div>
+                         <div class="result" id="localBeach-minwave">{{minWaveHeight}}</div>
+                         <div class="result" id="localBeach-maxwave">{{minWaveHeight}}</div>
+                         <iron-ajax auto url="http://magicseaweed.com/api/{{apiKey}}/forecast/?spot_id={{beachId}}" handle-as="json" last-response="{{data}}"></iron-ajax>
+  </template>
+</dom-module>
+<script>
+  Polymer({
+    is: "wave-forcast"
+  });
+</script>
