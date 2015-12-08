@@ -1,4 +1,19 @@
-<link rel="import" href="../google-map/google-map.html">
+<!doctype html>
+<html>
+  <head>
+    <base href="http://dev.open-elements.org/bower_components/new/">
+    <title>wave-forcast demo</title>
+    <script>window.onerror = function (errorMsg, url, line) {document.write('Error: ' + errorMsg + ' Script: ' + url + ' Line: ' + line)}</script>
+  </head>
+  <body>
+    <h3>wave-forcast Demo</h3>
+    <wave-forcast></wave-forcast>
+  </body>
+</html><link rel="import" href="../paper-badge/paper-badge.html">
+<link rel="import" href="false">
+<link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-input/paper-input.html">
+<link rel="import" href="../iron-ajax/iron-ajax.html">
 <link rel="import" href="../polymer/polymer.html">
 <!--
 `<wave-forcast>` a forecast to let you know the current wave heights
@@ -7,16 +22,31 @@
 
 <dom-module id="wave-forcast">
   <template>
-
-                         <h3 id="current-name">Maddie's Local Beach</h3>
-                         <div class="result" id="localBeach-lastUpdate">{{beachName}}</div>
-                         <div class="result" id="localBeach-minwave">{{minWaveHeight}}</div>
-                         <div class="result" id="localBeach-maxwave">{{minWaveHeight}}</div>
-                         <iron-ajax auto url="http://magicseaweed.com/api/{{apiKey}}/forecast/?spot_id={{beachId}}" handle-as="json" last-response="{{data}}"></iron-ajax>
+    
+    <h1>Local Beach</h1>
+    <paper-input placeholder="PLEASE ENTER YOUR API KEY FOR MARGIC SEAWEED">{{apiKey}}</paper-input>
+    <paper-input placeholder="PLEASE ENTER THE ID OF THE BEACH YOUR LOOKING FOR">{{beachId}}</paper-input>
+    
+    <p>Please note to the find the ID of the beach your looking for, please go to http://magicseaweed.com</p>
+    <p>Find the beach your are looking for and the ID for the beach will be the number at the very end of the url</p>
+    <p>E.G. Falmouth = http://magicseaweed.com/Falmouth-Surf-Report/135/</p>
+    <p>Falmouth's Id will be 135</p>
+    
+    <div><h1>Minimum Wave Height:</h1>{{minWaveHeight}}</div>
+    <div><h1>Maximum Wave Height:</h1>{{maxWaveHeight}}</div>
+    
+    <iron-ajax 
+    auto url="http://magicseaweed.com/api/{{apiKey}}/forecast/?spot_id={{beachId}}" 
+    handle-as="json" 
+    last-response="{{data}}">
+    </iron-ajax>
   </template>
 </dom-module>
 <script>
+  var apiKey = document.getElementById('#apiKey')
+  var beachId = document.getElementById('#beachId')
   Polymer({
     is: "wave-forcast"
   });
+  
 </script>
