@@ -12,8 +12,10 @@
 </html><link rel="import" href="../paper-badge/paper-badge.html">
 <link rel="import" href="false">
 <link rel="import" href="../paper-material/paper-material.html">
+<link rel="import" href="../paper-dialog/paper-dialog.html">
 <link rel="import" href="../paper-input/paper-input.html">
 <link rel="import" href="../iron-ajax/iron-ajax.html">
+<link rel="import" href="../google-map/google-map.html">
 <link rel="import" href="../polymer/polymer.html">
 <!--
 `<wave-forcast>` a forecast to let you know the current wave heights
@@ -24,8 +26,13 @@
   <template>
     
     <h1>Local Beach</h1>
+    
+    <form is="iron-form" id="form" method="post" action="/form/handler">
     <paper-input placeholder="PLEASE ENTER YOUR API KEY FOR MARGIC SEAWEED">{{apiKey}}</paper-input>
     <paper-input placeholder="PLEASE ENTER THE ID OF THE BEACH YOUR LOOKING FOR">{{beachId}}</paper-input>
+    <paper-button raised onclick="submitForm()">Submit</paper-button>
+    </form>
+    
     
     <p>Please note to the find the ID of the beach your looking for, please go to http://magicseaweed.com</p>
     <p>Find the beach your are looking for and the ID for the beach will be the number at the very end of the url</p>
@@ -34,19 +41,18 @@
     
     <div><h1>Minimum Wave Height:</h1>{{minWaveHeight}}</div>
     <div><h1>Maximum Wave Height:</h1>{{maxWaveHeight}}</div>
-    
-    <iron-ajax 
-    auto url="http://magicseaweed.com/api/{{apiKey}}/forecast/?spot_id={{beachId}}" 
-    handle-as="json" 
-    last-response="{{data}}">
-    </iron-ajax>
+    <iron-ajax url="http://magicseaweed.com/api/{{apiKey}}/forecast/?spot_id={{beachId}}" handle-as="json" last-response="{{data}}"></iron-ajax>
   </template>
 </dom-module>
 <script>
-  var apiKey = document.getElementById('#apiKey')
-  var beachId = document.getElementById('#beachId')
+  form.addEventListener('iron-form-presubmit', function() {
+  this.request.method = 'put';
+  this.request.params = someCustomParams;
+});
+  
+</script>
+<script>
   Polymer({
     is: "wave-forcast"
   });
-  
 </script>
